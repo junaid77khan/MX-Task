@@ -20,7 +20,7 @@ function Page1() {
     const filteredData = data.filter((D) => filter === 'All' || D.Status === filter);
 
     return (
-        <div className="text-white flex flex-col justify-start items-center min-h-screen p-6 bg-gradient-to-t from-gray-800 to-cyan-900">
+        <div className="text-white flex flex-col justify-start items-center min-h-screen p-6 bg-gradient-to-t from-gray-800 to-cyan-700">
             <Header />
             <h1 className="text-4xl font-bold text-cyan-400 mb-12 text-center">Science Fiction Stories</h1>
 

@@ -14,7 +14,7 @@ function Header() {
             </div>
             <button 
                 onClick={() => navigate('/')} 
-                className="px-5 py-3 bg-gradient-to-r from-cyan-500 to-blue-800 rounded-xl mt-4 sm:mt-0"
+                className="px-5 py-3 bg-gradient-to-r from-cyan-500 to-blue-800 rounded-full mt-4 sm:mt-0"
             >
                 Sign out
             </button>

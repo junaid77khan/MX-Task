@@ -52,7 +52,7 @@ const Page2 = () => {
       </p>
 
       <div className="flex flex-wrap items-start mt-10 justify-center gap-6">
-        <div className="w-full md:w-1/3 bg-gradient-to-r from-cyan-800 to-blue-800 p-6 rounded-lg shadow-lg">
+        <div className="w-full md:w-1/3 bg-gradient-to-r from-gray-800 to-cyan-700 p-6 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold text-purple-400">Correction (Retry)</h3>
           <p className="text-sm mt-4 text-gray-200">
             Tier up the city! Drag pictures into matching words or unscramble the story to explore more about the lost city.
