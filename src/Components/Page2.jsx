@@ -1,61 +1,84 @@
-import React from 'react';
-import Header from './Header';
-import { useEffect, useState } from 'react';
-import Card from './Card';
+import React, { useState, useEffect } from "react";
+import Card from "./Card";
+import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
-function Page2() {
-const [data, setData] = useState([]);
-    useEffect(() => {
-            const fetchData = async () => {
-                let res = await fetch('https://mxpertztestapi.onrender.com/api/sciencefiction');
-                res = await res.json();
-                console.log(res);
-                
-                setData(res);
-            };
-            fetchData();
-        }, []);
-    return (
-        <div className="text-white flex flex-col items-center min-h-screen p-6 bg-gradient-to-b from-gray-900 to-gray-800">
-            <Header/>
+const Page2 = () => {
+  const [selectedTab, setSelectedTab] = useState("Word Explorer");
+  const navigate = useNavigate();
+  const tabs = ["Word Explorer", "Story Adventure", "Brain Quest"];
 
-            <div className="w-full flex justify-around items-center my-8">
-                <button className="px-6 py-3 rounded-lg text-lg font-semibold bg-cyan-500 text-white hover:bg-cyan-600 transition">Word Explorer</button>
-                <button className="px-6 py-3 rounded-lg text-lg font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600 transition">Story Adventure</button>
-                <button className="px-6 py-3 rounded-lg text-lg font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600 transition">Brain Quest</button>
-            </div>
+  const handleTabClick = (tab) => {
+    setSelectedTab(tab);
+  };
 
-            <div className="flex flex-col md:flex-row gap-8 w-full px-6">
-                <div className="bg-gray-700 p-6 rounded-lg w-full md:w-1/3">
-                    <h2 className="text-2xl font-bold mb-4">Correction (Noun)</h2>
-                    <p className="text-gray-300 mb-4">
-                        The Story is about a city where we assume that a city known as vanavela...
-                    </p>
-                    <img
-                        src="https://media.istockphoto.com/id/1434212178/photo/middle-eastern-lady-using-laptop-working-online-sitting-in-office.jpg?s=2048x2048&w=is&k=20&c=U0nKYf9Ggh8S77U7DvPlFpRE0bKiSOD9gr9naxHEpfM="
-                        alt="Teacher and students"
-                        className="w-full h-auto rounded-lg mb-4"
-                    />
-                    <p className="text-sm text-gray-400">Synonyms: hustle, free, joy, step forward</p>
-                    <p className="text-sm text-gray-400">Antonyms: hustle, free, joy, step forward</p>
-                </div>
+  const [data, setData] = useState([]);
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 flex-1">
-                    {data.map((D, index) => (
-                        D.Image[1] && (
-                            <div
-                                key={D?._id}
-                                onClick={() => navigate(`/d/${D._id}`, { state: D._id })}
-                                className=""
-                            >
-                                <Card img1={D?.Image[0]} img2={D?.Image[1]} status={D?.Status} title={D?.Title} />
-                            </div>
-                        )
-                    ))}
-                </div>
-            </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      let res = await fetch('https://mxpertztestapi.onrender.com/api/sciencefiction');
+      res = await res.json();
+      setData(res);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-t from-gray-800 to-cyan-900 text-white">
+      <Header />
+
+      <h1 className="text-center text-4xl font-extrabold text-cyan-400 mt-8">
+        The Lost City of Future Earth
+      </h1>
+
+      <div className="flex justify-center mt-6 gap-4">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => handleTabClick(tab)}
+            className={`px-6 py-2 rounded-full font-semibold text-lg transition-all duration-300 ease-in-out ${
+              selectedTab === tab
+                ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white"
+                : "bg-gray-600 text-gray-300 hover:bg-gray-700"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      <p className="text-center text-gray-300 mt-4 text-lg">
+        Drag Pictures to the matching Words, light up correct pairs, shake for a retry
+      </p>
+
+      <div className="flex flex-wrap items-start mt-10 justify-center gap-6">
+        <div className="w-full md:w-1/3 bg-gradient-to-r from-cyan-800 to-blue-800 p-6 rounded-lg shadow-lg">
+          <h3 className="text-lg font-semibold text-purple-400">Correction (Retry)</h3>
+          <p className="text-sm mt-4 text-gray-200">
+            Tier up the city! Drag pictures into matching words or unscramble the story to explore more about the lost city.
+          </p>
+          <img 
+            className="h-64 w-full mt-6 object-cover rounded-md shadow-md" 
+            src="https://images.pexels.com/photos/840996/pexels-photo-840996.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+            alt="Correction Example" 
+          />
         </div>
-    );
-}
+
+        <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          {data.map((D) => (
+            D.Image[1] && (
+              <div
+                key={D._id}
+                onClick={() => navigate(`/d/${D._id}`, { state: D._id })}
+              >
+                <Card img1={D.Image[0]} img2={D.Image[1]} status={D.Status} title={D.Title} />
+              </div>
+            )
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Page2;
